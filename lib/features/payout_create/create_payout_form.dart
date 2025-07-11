@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:task_one_paywise/features/payout_create/widgets/create_btn.dart';
+import 'package:task_one_paywise/features/payout_create/widgets/input_fields.dart';
+import 'package:task_one_paywise/utils/const/app_colors.dart';
+
+class CreatePayoutForm extends StatefulWidget {
+  const CreatePayoutForm({super.key});
+
+  @override
+  State<CreatePayoutForm> createState() => _CreatePayoutFormState();
+}
+
+class _CreatePayoutFormState extends State<CreatePayoutForm> {
+//   • Fields: Beneficiary Name, Account Number, IFSC, and Amount
+// • Validate all fields and highlight any input errors
+// • Amount should be greater than ₹10 and less than ₹1,00,000
+// • On submit, store the form data using Hive or SharedPreferences
+// • Create a History screen to display all past payout requests
+// • Use Flutter Form, proper validation, and a local database package
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController accNumberController = TextEditingController();
+  TextEditingController ifscController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Create Payout",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppColors.primaryColor,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                InputFields(
+                  controller: nameController,
+                  label: "Beneficiary Name",
+                  validator: (val) =>
+                      validator(val, "baneficiary name required"),
+                ),
+                InputFields(
+                  controller: accNumberController,
+                  label: "Account Number",
+                  validator: (val) => validator(val, "account no required"),
+                ),
+                InputFields(
+                  controller: ifscController,
+                  label: "IFSC",
+                  validator: (val) => validator(val, "IFRC  required"),
+                ),
+                InputFields(
+                    controller: amountController,
+                    label: "Ammount",
+                    validator: (val) => amountValidator(val)),
+                SizedBox(
+                  height: 20,
+                ),
+                CreateBtn(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {}
+                    },
+                    label: "Create Paywise")
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String? validator(val, String message) {
+  if (val == null || val.isEmpty) {
+    return message;
+  } else {
+    return null;
+  }
+}
+
+amountValidator(val) {
+  if (val == null || val.isEmpty) {
+    return "amount field is required";
+  } else if (double.tryParse(val)! > 10.00 || double.tryParse(val)! < 100000) {
+    return "Amount should be greater than ₹10 and less than ₹1,00,000";
+  } else {
+    return null;
+  }
+}
+
+storePaywise() {}
