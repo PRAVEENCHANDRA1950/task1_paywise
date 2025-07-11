@@ -22,9 +22,12 @@ samples, guidance on mobile development, and a full API reference. -->
 ![IFSC length 11 validation](screenshots/login_tab.png)
 ![Amount  validation](screenshots/login_tab.png)
 ![success snakbar](screenshots/login_tab.png) -->
-![History page](screenshots/history.png)
-![create payout form](screenshots/form.jpeg)
-![IRFC](screenshots/irfc.jpeg)
-![success](screenshots/success.jpeg)
+![Step 1](screenshots/step1.png)
+![Step2](screenshots/step2.png)
+![Step3](screenshots/step3.png)
+![Step3 pin validate](screenshots/pinValidate.png)
+![tc](screenshots/tc.png)
+![Home](screenshots/home.png)
+
 
 ---
