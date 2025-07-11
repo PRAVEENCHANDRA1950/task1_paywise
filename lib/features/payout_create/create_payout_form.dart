@@ -66,6 +66,7 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                 InputFields(
                   controller: accNumberController,
                   label: "Account Number",
+                  keyboardType: TextInputType.number,
                   validator: (val) => validator(val, "account no required"),
                 ),
                 InputFields(
@@ -75,7 +76,8 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                 ),
                 InputFields(
                     controller: amountController,
-                    label: "Ammount",
+                    label: "Amount",
+                    keyboardType: TextInputType.number,
                     validator: (val) => amountValidator(val)),
                 SizedBox(
                   height: 20,
@@ -98,6 +100,7 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                              backgroundColor: Colors.green,
                               content: Text('Paywise created successfully')),
                         );
                       }
@@ -123,8 +126,15 @@ String? validator(val, String message) {
 amountValidator(val) {
   if (val == null || val.isEmpty) {
     return "amount field is required";
-  } else if (double.tryParse(val)! > 10.00 || double.tryParse(val)! < 100000) {
-    return "Amount should be greater than ₹10 and less than ₹1,00,000";
+  }
+
+  // else if (double.tryParse(val)! > 10.00) {
+  // return "s"
+  // }
+  else if (double.tryParse(val)! < 10.00) {
+    return "greater than ₹10";
+  } else if (double.tryParse(val)! > 100000) {
+    return "Less than 100000";
   } else {
     return null;
   }
