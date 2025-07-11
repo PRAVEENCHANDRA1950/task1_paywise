@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:task_one_paywise/features/history/page/history.dart';
 import 'package:task_one_paywise/features/payout_create/models/payout_model.dart';
@@ -72,7 +74,7 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                 InputFields(
                   controller: ifscController,
                   label: "IFSC",
-                  validator: (val) => validator(val, "IFSC  required"),
+                  validator: (val) => ifscValidation(val),
                 ),
                 InputFields(
                     controller: amountController,
@@ -101,11 +103,11 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               backgroundColor: Colors.green,
-                              content: Text('Paywise created successfully')),
+                              content: Text('Payout created successfully')),
                         );
                       }
                     },
-                    label: "Create Paywise")
+                    label: "Create Payout")
               ],
             ),
           ),
@@ -116,14 +118,19 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
 }
 
 String? validator(val, String message) {
+  log(message);
   if (val == null || val.isEmpty) {
     return message;
-  } else if (message.contains("IFSC")) {
-    if (message.length == 11) {
-      return null;
-    } else {
-      return "IFSC should be 11 char";
-    }
+  } else {
+    return null;
+  }
+}
+
+ifscValidation(String? val) {
+  if (val == null || val.isEmpty) {
+    return "IFSC required";
+  } else if (val.length < 11 || val.length > 11) {
+    return "length must be 11";
   } else {
     return null;
   }
@@ -137,8 +144,8 @@ amountValidator(val) {
   // else if (double.tryParse(val)! > 10.00) {
   // return "s"
   // }
-  else if (double.tryParse(val)! < 10.00) {
-    return "greater than ₹10";
+  else if (double.tryParse(val)! < 9.00) {
+    return "minimum anount should be ₹10";
   } else if (double.tryParse(val)! > 100000) {
     return "Less than 100000";
   } else {
