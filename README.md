@@ -24,5 +24,7 @@ samples, guidance on mobile development, and a full API reference. -->
 ![success snakbar](screenshots/login_tab.png) -->
 ![History page](screenshots/history.png)
 ![create payout form](screenshots/form.jpeg)
+![IRFC](screenshots/irfc.jpeg)
+![success](screenshots/success.jpeg)
 
 ---
