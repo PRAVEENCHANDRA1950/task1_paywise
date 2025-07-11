@@ -36,8 +36,9 @@ class _Step3TermsConditionsState extends State<Step3TermsConditions> {
               text: "Finish",
               onPressed: () async {
                 if (!accepted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Please accept the terms")));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("Please accept the terms")));
                   return;
                 }
 
