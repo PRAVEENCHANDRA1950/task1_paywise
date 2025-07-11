@@ -1,7 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:task_one_paywise/features/history/page/history.dart';
+import 'package:task_one_paywise/features/payout_create/models/payout_model.dart';
 import 'package:task_one_paywise/features/payout_create/widgets/create_btn.dart';
 import 'package:task_one_paywise/features/payout_create/widgets/input_fields.dart';
 import 'package:task_one_paywise/utils/const/app_colors.dart';
+import 'package:task_one_paywise/utils/database/shared_preff_methods.dart';
 
 class CreatePayoutForm extends StatefulWidget {
   const CreatePayoutForm({super.key});
@@ -33,6 +38,14 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primaryColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => History()));
+              },
+              icon: Icon(Icons.history_sharp))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,8 +81,26 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                   height: 20,
                 ),
                 CreateBtn(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final PayoutModel val = PayoutModel(
+                          accNo: accNumberController.text.trim(),
+                          ifsc: ifscController.text.trim(),
+                          amount: double.parse(amountController.text.trim()),
+                          name: nameController.text.trim(),
+                        );
+
+                        await storePaywise(val);
+                        accNumberController.clear();
+                        ifscController.clear();
+                        amountController.clear();
+                        nameController.clear();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Paywise created successfully')),
+                        );
+                      }
                     },
                     label: "Create Paywise")
               ],
@@ -99,4 +130,6 @@ amountValidator(val) {
   }
 }
 
-storePaywise() {}
+storePaywise(val) async {
+  await SharedPreffMethods().storePayrollInDB(val);
+}
