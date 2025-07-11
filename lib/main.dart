@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:task_one_paywise/features/payout_create/create_payout_form.dart';
+import 'features/onbording/presentation/pages/step1_screen.dart';
+import 'features/onbording/presentation/pages/step2_page.dart';
+import 'features/onbording/presentation/pages/step3_page.dart';
+import 'features/home/pages/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const OnboardingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class OnboardingApp extends StatelessWidget {
+  const OnboardingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Paywise Task 1',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: CreatePayoutForm(),
+      title: '3-Step Onboarding',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Step1UserDetails(),
+        '/step2': (context) => Step2PinSetup(),
+        '/step3': (context) => const Step3TermsConditions(),
+        '/success': (context) => const HomeScreen(),
+      },
     );
   }
 }
