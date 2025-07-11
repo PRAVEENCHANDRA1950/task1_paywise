@@ -20,6 +20,9 @@ class InputFields extends StatelessWidget {
         keyboardType: keyboardType,
         validator: validator,
         controller: controller,
+        textCapitalization: label == "IFSC"
+            ? TextCapitalization.characters
+            : TextCapitalization.none,
         decoration: InputDecoration(
             hintText: label, label: Text(label), border: OutlineInputBorder()),
       ),

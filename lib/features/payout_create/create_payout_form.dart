@@ -72,7 +72,7 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                 InputFields(
                   controller: ifscController,
                   label: "IFSC",
-                  validator: (val) => validator(val, "IFRC  required"),
+                  validator: (val) => validator(val, "IFSC  required"),
                 ),
                 InputFields(
                     controller: amountController,
@@ -87,7 +87,7 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
                       if (_formKey.currentState!.validate()) {
                         final PayoutModel val = PayoutModel(
                           accNo: accNumberController.text.trim(),
-                          ifsc: ifscController.text.trim(),
+                          ifsc: ifscController.text.trim().toUpperCase(),
                           amount: double.parse(amountController.text.trim()),
                           name: nameController.text.trim(),
                         );
@@ -118,6 +118,12 @@ class _CreatePayoutFormState extends State<CreatePayoutForm> {
 String? validator(val, String message) {
   if (val == null || val.isEmpty) {
     return message;
+  } else if (message.contains("IFSC")) {
+    if (message.length == 11) {
+      return null;
+    } else {
+      return "IFSC should be 11 char";
+    }
   } else {
     return null;
   }
